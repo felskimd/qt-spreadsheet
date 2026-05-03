@@ -1,5 +1,5 @@
 # qt-spreadsheet
-Приложение на Qt на основе https://github.com/felskimd/cpp-spreadsheet
+Qt приложение на основе https://github.com/felskimd/cpp-spreadsheet
 
 ## Реализовано:
 * Qt-модель для связи оригинальной модели таблицы и QTableView

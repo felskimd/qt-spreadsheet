@@ -34,6 +34,7 @@ include_directories(
 file(GLOB sources
     *.cpp
     *.h
+    *.md
     spreadsheet/*.cpp
     spreadsheet/*.h
     windows/*.cpp
