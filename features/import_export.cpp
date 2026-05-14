@@ -37,12 +37,11 @@ bool features::CSVProcessor::Export(const QDir& path, const QString& name, const
                 out << ';';
             }
             auto cell = sheet.GetCell({.row = i, .col = j});
-            //Wrong, not need to quote numbers
             auto text = cell->GetText();
             if (cell && !text.empty()) {
                 try {
                     size_t pos;
-                    double val = std::stod(text, &pos);
+                    std::stod(text, &pos);
                     if (pos == text.size()) {
                         out << QString{text.data()};
                     }
