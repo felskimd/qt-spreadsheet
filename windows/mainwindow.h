@@ -27,6 +27,7 @@ private slots:
     void on_actionExport_triggered();
 
     void updateActionsVisibility();
+    void showContextMenu(const QPoint &pos);
 
 private:
     Ui::MainWindow *ui;

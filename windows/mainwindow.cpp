@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     updateActionsVisibility();
+
+    //setup tableView
+    ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tableView, &QTableView::customContextMenuRequested, this, &MainWindow::showContextMenu);
 }
 
 MainWindow::~MainWindow() {
@@ -53,4 +57,27 @@ void MainWindow::updateActionsVisibility() {
     bool no_sheet = ui->tableView->model() == nullptr;
     ui->actionExport->setDisabled(no_sheet);
     ui->menuEdit->setDisabled(no_sheet);
+}
+
+void MainWindow::showContextMenu(const QPoint &pos) {
+    auto* menu = new QMenu(this);
+    //add logic
+    auto* copyAction = new QAction("Copy");
+    connect(copyAction, SIGNAL(triggered()), this, SLOT());
+    menu->addAction(copyAction);
+
+    auto* pasteAction = new QAction("Paste");
+    connect(pasteAction, SIGNAL(triggered()), this, SLOT());
+    menu->addAction(pasteAction);
+
+    QMenu* submenu = menu->addMenu("Move");
+    QMenu* submenuSelected = submenu->addMenu("Selected");
+    QMenu* submenuSelectedAndAfter = submenu->addMenu("Selected and all after");
+
+    menu->addSeparator();
+    auto* clearAction = new QAction("Clear");
+    connect(clearAction, SIGNAL(triggered()), this, SLOT());
+    menu->addAction(clearAction);
+
+    menu->popup(ui->tableView->mapToGlobal(pos));
 }
