@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.19)
 project(SpreadSheet LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Test)
 
 qt_standard_project_setup()
+set(CMAKE_AUTOMOC ON)
 
 #set(sources "main.cpp" "mainwindow.cpp" "mainwindow.h" "mainwindow.ui" "spreadsheet/FormulaAST.h"
 #    "spreadsheet/formula.h" "spreadsheet/common.h" "spreadsheet/sheet.h" "spreadsheet/test_runner_p.h" "spreadsheet/cell.h"
@@ -43,11 +44,21 @@ file(GLOB sources
     features/*.h
     features/*.cpp
 )
+file(GLOB test_sources
+    spreadsheet/*.cpp
+    spreadsheet/*.h
+    tests/*.cpp
+    tests/*.h
+)
 
 qt_add_executable(SpreadSheet
     WIN32 MACOSX_BUNDLE
     ${ANTLR_FormulaParser_CXX_OUTPUTS}
     ${sources}
+)
+qt_add_executable(Test
+    ${ANTLR_FormulaParser_CXX_OUTPUTS}
+    ${test_sources}
 )
 
 target_link_libraries(SpreadSheet
@@ -56,6 +67,15 @@ target_link_libraries(SpreadSheet
         Qt::Widgets
         antlr4_static
 )
+target_link_libraries(Test
+    PRIVATE
+        Qt::Core
+        Qt::Widgets
+        antlr4_static
+        Qt::Test
+)
+
+add_test(NAME AllTests COMMAND Test)
 
 include(GNUInstallDirs)
 
