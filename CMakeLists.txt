@@ -70,7 +70,7 @@ target_link_libraries(SpreadSheet
 target_link_libraries(Test
     PRIVATE
         Qt::Core
-        Qt::Widgets
+        #Qt::Widgets
         antlr4_static
         Qt::Test
 )
