@@ -3,11 +3,21 @@
 
 #include <QTableView>
 
+enum Direction {
+    up,
+    down,
+    right,
+    left
+};
+
 class SheetWidget : public QTableView
 {
     Q_OBJECT
 public:
     explicit SheetWidget(QWidget *parent = nullptr);
+
+    void MoveItems(Direction dir);
+    void DeleteItems();
 
 signals:
 };

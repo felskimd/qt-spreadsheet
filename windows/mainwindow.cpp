@@ -3,15 +3,18 @@
 #include "newdialog.h"
 #include "importdialog.h"
 #include "exportdialog.h"
-#include "sheet_model.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    updateActionsVisibility();
 
+    //createActions();
+    //createMenus();
+    //createUndoView();
+
+    updateActionsVisibility();
     //setup tableView
     ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableView, &QTableView::customContextMenuRequested, this, &MainWindow::showContextMenu);
@@ -76,8 +79,14 @@ void MainWindow::showContextMenu(const QPoint &pos) {
 
     menu->addSeparator();
     auto* clearAction = new QAction("Clear");
-    connect(clearAction, SIGNAL(triggered()), this, SLOT());
+    connect(clearAction, &QAction::triggered, this, &MainWindow::on_actionClear_triggered);
     menu->addAction(clearAction);
 
     menu->popup(ui->tableView->mapToGlobal(pos));
 }
+
+void MainWindow::on_actionClear_triggered()
+{
+    ui->tableView->DeleteItems();
+}
+

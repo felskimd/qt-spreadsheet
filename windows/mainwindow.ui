@@ -39,7 +39,7 @@
        <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
       </property>
       <item row="0" column="0">
-       <widget class="QTableView" name="tableView"/>
+       <widget class="SheetWidget" name="tableView"/>
       </item>
      </layout>
     </item>
@@ -72,7 +72,7 @@
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
     <addaction name="actionCut"/>
-    <addaction name="actionDelete"/>
+    <addaction name="actionClear"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -113,9 +113,12 @@
     <string>Cut</string>
    </property>
   </action>
-  <action name="actionDelete">
+  <action name="actionClear">
    <property name="text">
-    <string>Delete</string>
+    <string>Clear</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear</string>
    </property>
   </action>
   <action name="actionNew">
@@ -124,6 +127,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SheetWidget</class>
+   <extends>QTableView</extends>
+   <header>../../../../windows/sheet_widget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

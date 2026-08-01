@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QUndoView>
+#include <QUndoStack>
 #include "qt_common.h"
 #include "sheet_model.h"
 
@@ -29,7 +31,19 @@ private slots:
     void updateActionsVisibility();
     void showContextMenu(const QPoint &pos);
 
+    void on_actionClear_triggered();
+
 private:
+    void createActions();
+    void createMenus();
+    void createUndoView();
+
+    QAction *undoAction = nullptr;
+    QAction *redoAction = nullptr;
+    //other actions
+
+    QUndoStack *undoStack = nullptr;
+    QUndoView *undoView = nullptr;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
