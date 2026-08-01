@@ -63,24 +63,27 @@ void MainWindow::updateActionsVisibility() {
 }
 
 void MainWindow::showContextMenu(const QPoint &pos) {
+    //ui->menuEdit->actions();
     auto* menu = new QMenu(this);
+    menu->addActions(ui->menuEdit->actions());
+
     //add logic
-    auto* copyAction = new QAction("Copy");
-    connect(copyAction, SIGNAL(triggered()), this, SLOT());
-    menu->addAction(copyAction);
+    // auto* copyAction = new QAction("Copy");
+    // connect(copyAction, SIGNAL(triggered()), this, SLOT());
+    // menu->addAction(copyAction);
 
-    auto* pasteAction = new QAction("Paste");
-    connect(pasteAction, SIGNAL(triggered()), this, SLOT());
-    menu->addAction(pasteAction);
+    // auto* pasteAction = new QAction("Paste");
+    // connect(pasteAction, SIGNAL(triggered()), this, SLOT());
+    // menu->addAction(pasteAction);
 
-    QMenu* submenu = menu->addMenu("Move");
-    QMenu* submenuSelected = submenu->addMenu("Selected");
-    QMenu* submenuSelectedAndAfter = submenu->addMenu("Selected and all after");
+    // QMenu* submenu = menu->addMenu("Move");
+    // QMenu* submenuSelected = submenu->addMenu("Selected");
+    // QMenu* submenuSelectedAndAfter = submenu->addMenu("Selected and all after");
 
-    menu->addSeparator();
-    auto* clearAction = new QAction("Clear");
-    connect(clearAction, &QAction::triggered, this, &MainWindow::on_actionClear_triggered);
-    menu->addAction(clearAction);
+    // menu->addSeparator();
+    // auto* clearAction = new QAction("Clear");
+    // connect(clearAction, &QAction::triggered, this, &MainWindow::on_actionClear_triggered);
+    // menu->addAction(clearAction);
 
     menu->popup(ui->tableView->mapToGlobal(pos));
 }
