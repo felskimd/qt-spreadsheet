@@ -28,7 +28,8 @@ private slots:
     void handleImportDialogData(SheetModel* sheet);
     void on_actionExport_triggered();
 
-    void updateActionsVisibility();
+    void updateFileActionsVisibility();
+    void updateEditActionsVisibility();
     void showContextMenu(const QPoint &pos);
 
     void on_actionClear_triggered();

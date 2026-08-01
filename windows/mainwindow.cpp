@@ -14,10 +14,11 @@ MainWindow::MainWindow(QWidget *parent)
     //createMenus();
     //createUndoView();
 
-    updateActionsVisibility();
+    updateFileActionsVisibility();
     //setup tableView
     ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableView, &QTableView::customContextMenuRequested, this, &MainWindow::showContextMenu);
+    connect(ui->menuEdit, &QMenu::aboutToShow, this, &MainWindow::updateEditActionsVisibility);
 }
 
 MainWindow::~MainWindow() {
@@ -34,7 +35,7 @@ void MainWindow::handleNewDialogData(const SheetMeta& data) {
     auto model = new SheetModel(ui->tableView);
     model->SetMeta(data);
     ui->tableView->setModel(model);
-    updateActionsVisibility();
+    updateFileActionsVisibility();
 }
 
 void MainWindow::on_actionImport_triggered() {
@@ -45,7 +46,7 @@ void MainWindow::on_actionImport_triggered() {
 
 void MainWindow::handleImportDialogData(SheetModel* sheet) {
     ui->tableView->setModel(sheet);
-    updateActionsVisibility();
+    updateFileActionsVisibility();
 }
 
 void MainWindow::on_actionExport_triggered() {
@@ -56,34 +57,33 @@ void MainWindow::on_actionExport_triggered() {
     export_dialog.exec();
 }
 
-void MainWindow::updateActionsVisibility() {
+void MainWindow::updateFileActionsVisibility() {
     bool no_sheet = ui->tableView->model() == nullptr;
     ui->actionExport->setDisabled(no_sheet);
     ui->menuEdit->setDisabled(no_sheet);
 }
 
+void MainWindow::updateEditActionsVisibility() {
+    bool sheet_items_selected = false;
+    bool can_undo_redo = false;
+    if (ui->tableView->model() != nullptr) {
+        sheet_items_selected = ui->tableView->selectionModel()->hasSelection();
+    }
+    //add undo/redo logic
+
+    ui->actionClear->setEnabled(sheet_items_selected);
+    ui->actionCopy->setEnabled(sheet_items_selected);
+    ui->actionCut->setEnabled(sheet_items_selected);
+    ui->actionPaste->setEnabled(sheet_items_selected);
+
+    ui->actionUndo->setEnabled(can_undo_redo);
+    ui->actionRedo->setEnabled(can_undo_redo);
+}
+
 void MainWindow::showContextMenu(const QPoint &pos) {
-    //ui->menuEdit->actions();
+    updateEditActionsVisibility();
     auto* menu = new QMenu(this);
     menu->addActions(ui->menuEdit->actions());
-
-    //add logic
-    // auto* copyAction = new QAction("Copy");
-    // connect(copyAction, SIGNAL(triggered()), this, SLOT());
-    // menu->addAction(copyAction);
-
-    // auto* pasteAction = new QAction("Paste");
-    // connect(pasteAction, SIGNAL(triggered()), this, SLOT());
-    // menu->addAction(pasteAction);
-
-    // QMenu* submenu = menu->addMenu("Move");
-    // QMenu* submenuSelected = submenu->addMenu("Selected");
-    // QMenu* submenuSelectedAndAfter = submenu->addMenu("Selected and all after");
-
-    // menu->addSeparator();
-    // auto* clearAction = new QAction("Clear");
-    // connect(clearAction, &QAction::triggered, this, &MainWindow::on_actionClear_triggered);
-    // menu->addAction(clearAction);
 
     menu->popup(ui->tableView->mapToGlobal(pos));
 }
@@ -92,4 +92,3 @@ void MainWindow::on_actionClear_triggered()
 {
     ui->tableView->DeleteItems();
 }
-
