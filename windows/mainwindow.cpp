@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //createActions();
-    //createMenus();
+    createMenus();
     //createUndoView();
 
     updateFileActionsVisibility();
@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::createMenus() {
+    sheetContextMenu = new QMenu(this);
+    sheetContextMenu->addActions(ui->menuEdit->actions());
 }
 
 void MainWindow::on_actionNew_triggered() {
@@ -82,10 +87,8 @@ void MainWindow::updateEditActionsVisibility() {
 
 void MainWindow::showContextMenu(const QPoint &pos) {
     updateEditActionsVisibility();
-    auto* menu = new QMenu(this);
-    menu->addActions(ui->menuEdit->actions());
 
-    menu->popup(ui->tableView->mapToGlobal(pos));
+    sheetContextMenu->popup(ui->tableView->mapToGlobal(pos));
 }
 
 void MainWindow::on_actionClear_triggered()
