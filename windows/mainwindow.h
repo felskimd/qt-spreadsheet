@@ -33,6 +33,7 @@ private slots:
     void showContextMenu(const QPoint &pos);
 
     void on_actionClear_triggered();
+    void on_actionCopy_triggered();
 
 private:
     void createActions();
@@ -47,5 +48,6 @@ private:
     QUndoView *undoView = nullptr;
     QMenu *sheetContextMenu = nullptr;
     Ui::MainWindow *ui;
+
 };
 #endif // MAINWINDOW_H

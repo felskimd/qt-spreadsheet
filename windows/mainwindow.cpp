@@ -4,6 +4,10 @@
 #include "importdialog.h"
 #include "exportdialog.h"
 
+#include <QClipboard>
+#include <QMimeData>
+#include <QApplication>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -95,3 +99,16 @@ void MainWindow::on_actionClear_triggered()
 {
     ui->tableView->DeleteItems();
 }
+
+void MainWindow::on_actionCopy_triggered()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    if (clipboard) {
+        QByteArray data = ui->tableView->CopySelected();
+        if (data.isEmpty()) {
+            return;
+        }
+        clipboard->setText(data);
+    }
+}
+

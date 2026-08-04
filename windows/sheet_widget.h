@@ -18,6 +18,7 @@ public:
 
     void MoveItems(Direction dir);
     void DeleteItems();
+    QByteArray CopySelected() const;
 
 signals:
 };
