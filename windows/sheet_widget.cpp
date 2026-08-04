@@ -52,9 +52,7 @@ QByteArray SheetWidget::CopySelected() const {
         else {
             data.push_back('\t');
         }
-        //data.push_back('"');
         data.push_back(index.data(Qt::EditRole).toByteArray());
-        //data.push_back('"');
         prev = &index;
     }
     return data;

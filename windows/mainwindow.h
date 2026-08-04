@@ -48,6 +48,5 @@ private:
     QUndoView *undoView = nullptr;
     QMenu *sheetContextMenu = nullptr;
     Ui::MainWindow *ui;
-
 };
 #endif // MAINWINDOW_H

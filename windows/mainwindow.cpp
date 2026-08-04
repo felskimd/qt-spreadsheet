@@ -91,7 +91,6 @@ void MainWindow::updateEditActionsVisibility() {
 
 void MainWindow::showContextMenu(const QPoint &pos) {
     updateEditActionsVisibility();
-
     sheetContextMenu->popup(ui->tableView->mapToGlobal(pos));
 }
 
