@@ -19,6 +19,7 @@ public:
     void MoveItems(Direction dir);
     void DeleteItems();
     QByteArray CopySelected() const;
+    void Paste(const QMimeData *data) const;
 
 signals:
 };

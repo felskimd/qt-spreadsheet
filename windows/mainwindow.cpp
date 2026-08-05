@@ -111,3 +111,20 @@ void MainWindow::on_actionCopy_triggered()
     }
 }
 
+
+void MainWindow::on_actionCut_triggered()
+{
+    on_actionCopy_triggered();
+    on_actionClear_triggered();
+}
+
+
+void MainWindow::on_actionPaste_triggered()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    if (clipboard) {
+        auto *data = clipboard->mimeData();
+        ui->tableView->Paste(data);
+    }
+}
+
